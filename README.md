@@ -14,6 +14,7 @@ An augmented interval-list (AIList) algorithm is presented. The interval list is
 git clone https://github.com/databio/AIList.git
 cd AIList
 make
+sudo cp bin/AIList /usr/local/bin
 ```
 
 ## How to run AIList (for evaluation)
@@ -26,6 +27,25 @@ where:
 - path/to/query_file is the path to the query file
 
 - path/to/data_file is the path to the igd data
+
+```
+
+## Build and run AIList and AITree from 3rd parties
+
+```
+cd AIList/src_AITree
+make -w
+sudo cp AITree /usr/local/bin
+```
+```
+cd AIList/src_NCList
+gcc -o NCList intervaldb.c
+sudo cp NCList /usr/local/bin
+```
+```
+time AITree "path/to/query_file" "path/to/data_file" > /dev/null
+
+time NCList "path/to/query_file" "path/to/data_file" > /dev/null
 
 ```
 
