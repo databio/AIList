@@ -1,4 +1,4 @@
-## AIList: an effective algorithm for searching genomic interval data 
+# AIList: an effective algorithm for searching genomic interval data 
 
 ### Motivation: Genomic data are signals recorded as intervals on the genome coordinates. Interval-based comparing operation is fundamental to nearly all genomic analysis. As the available genomic data rapidly grows, developing effective and dedicated algorithms for searching this data becomes necessary. 
 
@@ -12,10 +12,10 @@ cd AIList
 make
 ```
 
-### How to run AIList
+### How to run AIList (for evaluation)
 
 ```
-AIList "path/to/query_file" "path/to/data_file"
+time AIList "path/to/query_file" "path/to/data_file" > /dev/null
 
 where:
 
