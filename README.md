@@ -30,11 +30,11 @@ where:
 
 ```
 
-## Build and run AIList and AITree from 3rd parties
+## Build and run AIList and AITree from 3rd parties; run BEDTools for performance comparison
 
 ```
 cd AIList/src_AITree
-make -w
+make
 sudo cp AITree /usr/local/bin
 ```
 ```
@@ -46,7 +46,10 @@ sudo cp NCList /usr/local/bin
 time AITree "path/to/query_file" "path/to/data_file" > /dev/null
 
 time NCList "path/to/query_file" "path/to/data_file" > /dev/null
+```
 
+```
+time bedtools intersect -a "path/to/query_file" -b "path/to/data_file" -c > /dev/null
 ```
 
 ## Test datasets
