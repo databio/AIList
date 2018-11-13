@@ -383,7 +383,7 @@ void iCounter(struct g_data* A, int nA, struct g_data* B, int nB)
 
 void searchAIList(struct g_data* A, int nA, struct g_data* B, int nB)
 {   //---pass dynamically allocated array back to caller
-    printf("AIList saerch:\n");
+    printf("AIList search:\n");
     clock_t start1, end1, start2, end2;
     start1 = clock();
     qsort(B, nB, sizeof(struct g_data), compare_rend);
@@ -1031,6 +1031,177 @@ void AIListSearchS(struct g_data* A, int nA, struct g_data* B, int nB)
     free(aiList2);
 }
 
+void AIListIntersect1(char* fQuery, struct g_data** B, int* nB)
+{   //split B into two parts: n0=20 is the best
+    //bed end not inclusive
+    clock_t start1, end1, start2, end2;
+    start1 = clock();      
+    int n0=20, dist, i, i1, j, t, tS, tE; 
+    uint32_t tt;   
+    struct g_data** B1 = malloc(24*sizeof(struct g_data*));     
+    //int **idx = malloc(24*sizeof(int*));
+    struct g_data** B2 = malloc(24*sizeof(struct g_data*)); 
+    uint32_t** aiList1 = malloc(24*sizeof(uint32_t*));   
+    uint32_t** aiList2 = malloc(24*sizeof(uint32_t*));       
+    int *nB1 = calloc(24, sizeof(int));
+    int *nB2 = calloc(24, sizeof(int));   
+
+    for(i=0;i<24;i++){
+        qsort(B[i], nB[i], sizeof(struct g_data), compare_rstart);                
+        B1[i] = malloc(nB[i]*sizeof(struct g_data));
+        B2[i] = malloc(MAX(nB[i]/4, n0)*sizeof(struct g_data));    //nB2<nB/4  
+        if(nB[i]<=n0){
+            memcpy(B1[i], B[i], nB[i]*sizeof(struct g_data));
+            nB1[i] = nB[i];         
+        }
+        else{
+            for(t=0; t<nB[i]-n0; t++){
+                tt = B[i][t].r_end;
+                j=1;
+                while(j<n0 && B[i][j+t].r_end<tt)
+                    j++;
+                if(j==n0){
+                    B2[i][nB2[i]] = B[i][t];
+                    nB2[i]++;
+                }
+                else{
+                    B1[i][nB1[i]] = B[i][t];
+                    nB1[i]++;
+                }                    
+            }    
+            for(t=nB[i]-n0; t<nB[i]; t++){
+                B1[i][nB1[i]] = B[i][t];
+                nB1[i]++;
+            }           
+        }
+        if(nB[i]>0)
+            free(B[i]);
+        //---------------------------------------------------------------------
+        aiList1[i] = malloc(nB1[i]*sizeof(uint32_t));   
+        aiList2[i] = malloc((1+nB2[i])*sizeof(uint32_t));       
+        tt=B1[i][0].r_end;
+        aiList1[i][0] = tt;
+        for(t=1; t<nB1[i]; t++){
+            if(B1[i][t].r_end > tt)
+                tt = B1[i][t].r_end;
+            aiList1[i][t] = tt;  
+        } 
+        if(nB2[i]>0){ 
+            tt=B2[i][0].r_end;
+            aiList2[i][0] = tt;
+            for(t=1; t<nB2[i]; t++){
+                if(B2[i][t].r_end > tt)
+                    tt = B2[i][t].r_end;
+                aiList2[i][t] = tt;  
+            }  
+        }         
+    } 
+    printf("nB1, nB2: %i %i\n", nB1[0], nB2[0]);
+    //-------------------------------------------------------------------------    
+    end1 = clock();    
+    printf("Constructing time: %f\n", ((double)(end1-start1))/CLOCKS_PER_SEC);    
+    //-------------------------------------------------------------------------
+    int bufsize = 1024;   
+    int* OlsC = malloc(bufsize*sizeof(int));
+    int* OlsI = malloc(bufsize*sizeof(int));
+    char buf[1024], s10[128];
+    FILE* fd = fopen(fQuery, "r");
+    int ichr=-1, lens, t1, t2, ichr0=-1;
+    uint32_t qs, qe, rs, re, gs, qhits;
+    uint64_t Total=0;
+    char *s1, *s2, *s3;   
+    strcpy(s10, fQuery);   
+    while (fgets(buf, 1024, fd)) {
+        s1 = strtok(buf, "\t");
+        s2 = strtok(NULL, "\t");
+        s3 = strtok(NULL, "\t");  
+        if(strcmp(s1, s10)==0){
+            ichr = ichr0;
+        } 
+        else{
+            lens = strlen(s1);   
+            if(lens > 5 || lens < 4)
+                ichr = -1;  
+            else if(strcmp(s1, "chrX")==0)
+                ichr = 22;
+            else if(strcmp(s1, "chrY")==0)
+                ichr = 23;     
+            else if (strcmp(s1, "chrM")==0)
+                ichr = -1;    
+            else{
+                ichr = (int)(atoi(&s1[3])-1);
+            }
+            ichr0 = ichr;
+            strcpy(s10, s1); 
+        }         
+        if(ichr>=0){
+            qhits = 0;
+            qs = atol(s2);
+            qe = atol(s3);   
+            //-----------------------------------------------------------------  
+            //BSearch takes very little time!!! 2M bSearch(50M)~0.5s!!!     
+            //tE = bSearch3a(B[ichr], nB[ichr], qe);            
+            t = bSearch3a(B1[ichr], nB1[ichr], qe); 
+            while(t>=0 && aiList1[ichr][t]>qs){
+                if(B1[ichr][t].r_end>qs){
+                    if(qhits<bufsize){
+                        OlsC[qhits] = ichr;
+                        OlsI[qhits] = t;                
+                    }
+                    qhits++;
+                }    
+                t--;
+            }
+            
+            if(nB2[ichr]>16){
+                t = bSearch3a(B2[ichr], nB2[ichr], qe);                 
+                while(t>=0 && aiList2[ichr][t]>qs){
+                    if(B2[ichr][t].r_end>qs){
+                        if(qhits<bufsize){
+                            OlsC[qhits] = ichr;
+                            OlsI[qhits] = t;                
+                        }                  
+                        qhits++;
+                    }    
+                    t--;
+                }
+            }
+            else if(nB2[ichr]>0){
+                for(j=0;j<nB2[ichr];j++){
+                    if(qs<B2[ichr][j].r_end && qe>B2[ichr][j].r_start){
+                        if(qhits<bufsize){
+                            OlsC[qhits] = ichr;
+                            OlsI[qhits] = t;                
+                        }
+                        qhits++;
+                    }
+                }
+            } 
+            //if(qhits>0)
+            printf("%s\t%u\t%u\t%i\n", s1, qs, qe, qhits);             
+            
+            Total += qhits;                                  
+        }   
+    }    
+    fclose(fd);       
+    end2 = clock();
+    printf("Searching time: %f\n",((double)(end2-end1))/CLOCKS_PER_SEC);      
+    printf("Total:%lld\n", (long long)Total);    
+
+    for(i=0;i<24;i++){
+        free(B1[i]);
+        free(B2[i]);
+    }
+    free(OlsC);
+    free(OlsI);
+    free(nB1);
+    free(nB2);
+    free(B1);
+    free(B2);
+    free(aiList1); 
+    free(aiList2);
+}
+
 void AIListIntersect(char* fQuery, struct g_data** B, int* nB)
 {   //split B into two parts: n0=20 is the best
     //bed end not inclusive
@@ -1172,6 +1343,7 @@ void AIListIntersect(char* fQuery, struct g_data** B, int* nB)
                     }
                 }
                 Total += qhits;   
+                printf("%s\t%i\t%i\t%i\n", s1, qs, qe, qhits);                   
             }                
         }   
     }    
@@ -2238,7 +2410,7 @@ int main(int argc, char **argv)
     }
     if(choice==8){
         clock_t start, end;
-        start = clock();     
+        start = clock();     //chr25: all other minors
         uint32_t* nD24 = calloc(24, sizeof(uint32_t));
         struct g_data** pD24 = openBed24(dfName, nD24);
         end = clock();    

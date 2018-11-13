@@ -109,6 +109,7 @@ void searchAITree(struct g_data* A, int nA, struct g_data* B, int nB);
 void AIListSearch(struct g_data* A, int nA, struct g_data* B, int nB);
 void AIListSearchS(struct g_data* A, int nA, struct g_data* B, int nB);
 void AIListIntersect(char* fQuery, struct g_data** B, int* nB);
+void AIListIntersect1(char* fQuery, struct g_data** B, int* nB);
 void dCounter(struct g_data* A, int nA, struct g_data* B, int nB);
 
 void func12Mi(char* fQuery, char* iPath);
