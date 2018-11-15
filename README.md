@@ -26,11 +26,11 @@ where:
 
 - path/to/query_file is the path to the query file
 
-- path/to/data_file is the path to the igd data
+- path/to/data_file is the path to the dataset file
 
 ```
 
-## Build and run AIList and AITree from 3rd parties; run BEDTools for performance comparison
+## Build and run NCList and AITree from 3rd parties; run BEDTools for performance comparison
 
 ```
 cd AIList/src_AITree
