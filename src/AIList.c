@@ -82,8 +82,16 @@ void AIListIntersect(char* fQuery, struct g_data** B, int* nB, int cLen)
     uint32_t** maxE = malloc(24*sizeof(uint32_t*)); 
     int numC[24], maxC=10, minL = MAX(64, cLen);  //max number of components, minL>cLen      
     
+    //int maxIter=0;//test 
+    
     for(i=0;i<24;i++){
-        qsort(B[i], nB[i], sizeof(struct g_data), compare_rstart);                
+        qsort(B[i], nB[i], sizeof(struct g_data), compare_rstart); 
+        
+        //for(k=0; k<nB[i]-1; k++){
+        //    if(B[i][k+1].r_end < B[i][k].r_end)
+        //        dtotal++;
+        //}
+                       
         aiL[i] = malloc(nB[i]*sizeof(struct g_data));
         maxE[i] = malloc(nB[i]*sizeof(uint32_t));        
         if(nB[i]<=minL){        
@@ -140,7 +148,9 @@ void AIListIntersect(char* fQuery, struct g_data** B, int* nB, int cLen)
                     iter++;
                 }
             }
-            free(aiT);       
+            free(aiT);  
+	    //if(iter>maxIter)
+	//	maxIter = iter;     
         }
         if(nB[i]>0)
             free(B[i]);
@@ -158,6 +168,9 @@ void AIListIntersect(char* fQuery, struct g_data** B, int* nB, int cLen)
             }             
         }      
     } 
+    
+    //printf("The maximum number of subs: %i\n", maxIter);
+    
     //-------------------------------------------------------------------------    
     end1 = clock();    
     printf("Constructing time: %f\n", ((double)(end1-start1))/CLOCKS_PER_SEC);    
@@ -256,6 +269,7 @@ struct g_data** openBed(char* bFile, int* nD)
     char *s1, *s2, *s3;   
     FILE* fd = fopen(bFile, "r"); 
     strcpy(s10, bFile);      
+    //uint64_t avgsize = 0, ntotal = 0;
     while(fgets(buf, 1024, fd)!=NULL){
         s1 = strtok(buf, "\t");
         if(strcmp(s1, s10)==0){
@@ -287,6 +301,8 @@ struct g_data** openBed(char* bFile, int* nD)
         gD[i] = NULL;
         if(nD[i]>0)
             gD[i] = malloc(nD[i]*sizeof(struct g_data));
+            
+        //ntotal += nD[i];    
         nD[i]=0;
     }
     while (fgets(buf, 1024, fd)) {
@@ -317,8 +333,10 @@ struct g_data** openBed(char* bFile, int* nD)
             gD[ichr][k].r_start  = atol(s2);
             gD[ichr][k].r_end  = atol(s3);
             nD[ichr]++;
-        }     
+            //avgsize += atol(s3)-atol(s2);
+        } 
     } 
+    //printf("total intervals, avg size: %lld, %lld\n", (long long )ntotal, (long long) (avgsize/ntotal));
     fclose(fd);
     return gD;  
 } 
