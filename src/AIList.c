@@ -173,7 +173,7 @@ void AIListIntersect(char* fQuery, struct g_data** B, int* nB, int cLen)
     
     //-------------------------------------------------------------------------    
     end1 = clock();    
-    printf("Constructing time: %f\n", ((double)(end1-start1))/CLOCKS_PER_SEC);    
+    //printf("Constructing time: %f\n", ((double)(end1-start1))/CLOCKS_PER_SEC);    
     //-------------------------------------------------------------------------
     int bufsize = 1024;   
     int* OlsC = malloc(bufsize*sizeof(int));
@@ -250,8 +250,8 @@ void AIListIntersect(char* fQuery, struct g_data** B, int* nB, int cLen)
     }    
     fclose(fd);       
     end2 = clock();
-    printf("Searching time: %f\n",((double)(end2-end1))/CLOCKS_PER_SEC);      
-    printf("Total:%lld\n", (long long)Total);
+    //printf("Searching time: %f\n",((double)(end2-end1))/CLOCKS_PER_SEC);      
+    //printf("Total:%lld\n", (long long)Total);
     for(i=0;i<24;i++){
         free(aiL[i]);
         free(maxE[i]);
@@ -375,7 +375,7 @@ int main(int argc, char **argv)
     uint32_t* nD24 = calloc(24, sizeof(uint32_t));
     struct g_data** pD24 = openBed(dfName, nD24);
     end = clock();    
-    printf("loading time: %f \n", ((double)(end-start))/CLOCKS_PER_SEC);           
+    //printf("loading time: %f \n", ((double)(end-start))/CLOCKS_PER_SEC);           
     AIListIntersect(qfName, pD24, nD24, cLen);    //decomposition
     free(pD24);        
     free(nD24);
