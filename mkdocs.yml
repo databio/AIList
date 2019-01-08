@@ -1,0 +1,46 @@
+site_name: GSAIL
+# site_logo: img/logo_caravel_dark.svg
+site_url: http://code.databio.org/gsail/
+theme: databio
+
+repo_url: http://github.com/databio/gsail
+
+nav:
+  - Getting started:
+    - Introduction: README.md
+    - Installation and Hello World!: jupyter/introduction.md
+    - Benchmarks: jupyter/benchmark.md
+
+    
+  - How-to Guides:
+    - How to configure: configure.md
+
+  - Reference:
+    - Features: features.md
+    - Usage: usage.md
+    - FAQ: faq.md
+    - Support: support.md
+    - Contributing: contributing.md
+    - Changelog: changelog.md
+
+navbar:
+  left:
+  # - text: Episb web app
+  #   icon: fa-play
+  #   href: http://episb.org
+  # - text: Documentation
+  #   icon: fa-pencil
+  #   href: reference/index.html
+  - text: GitHub
+    icon: fa-github fa-lg
+    href: https://github.com/databio/gsail
+  right:
+  - text: Databio.org
+    href: http://databio.org
+  - text: Software & Data
+    href: http://databio.org/software/
+
+markdown_extensions:
+  - smarty
+  - sane_lists
+  - fenced_code

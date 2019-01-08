@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 79.695471 73.196206"
+   x="0px"
+   y="0px"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="logo_caravel.svg"
+   width="79.695465"
+   height="73.196205">
+  <metadata
+     id="metadata12">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>sailing</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs10" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview8"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:zoom="0.9050967"
+     inkscape:cx="-207.8012"
+     inkscape:cy="-197.4447"
+     inkscape:current-layer="svg2">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4150"
+       originx="-66.463333"
+       originy="104.32285" />
+    <sodipodi:guide
+       position="-88.633757,222.56512"
+       orientation="0,1"
+       id="guide4152" />
+  </sodipodi:namedview>
+  <title
+     id="title4">sailing</title>
+  <path
+     inkscape:connector-curvature="0"
+     id="path4153"
+     d="m 78.829959,66.002076 -7.194147,7.194132 -63.5761556,0 -7.19414303,-7.194132 c -1.505751,-1.505753 -1.003834,-2.844204 1.17114003,-2.844204 l 75.6221656,0 c 2.17497,0 2.67688,1.338451 1.17114,2.844204 z"
+     style="fill:#000000;fill-opacity:1" />
+  <path
+     inkscape:connector-curvature="0"
+     id="path4155"
+     d="m 38.843897,58.138711 32.289999,0 a 1.6730565,1.6730565 0 0 0 1.673056,-2.007669 L 60.593637,1.254786 c -0.334606,-1.67305308 -0.836521,-1.67305308 -1.003831,0 -1.840366,18.570929 -8.8672,36.807244 -22.251659,54.541651 a 1.6730565,1.6730565 0 0 0 1.50575,2.342274 z"
+     style="fill:#008080" />
+  <path
+     inkscape:connector-curvature="0"
+     id="path4157"
+     d="m 8.0596564,58.138711 23.7574036,0 a 1.1711395,1.1711395 0 0 0 1.171139,-1.505754 L 24.121,16.981525 c -0.334612,-1.673068 -0.836528,-1.505759 -1.003833,0 C 21.778721,30.365967 16.42494,43.583113 6.8885164,56.298352 a 1.1711395,1.1711395 0 0 0 1.17114,1.840359 z"
+     style="fill:#0080a3;fill-opacity:1" />
+</svg>
