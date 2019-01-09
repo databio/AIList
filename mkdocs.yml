@@ -1,0 +1,46 @@
+site_name: AIList
+# site_logo: img/logo_caravel_dark.svg
+site_url: http://code.databio.org/AIList/
+repo_url: http://github.com/databio/AIList
+theme: databio
+
+nav:
+  - Getting started:
+    - Introduction: README.md
+    - Installation and Hello World!: introduction.md
+    - Benchmarks: benchmarks.md
+  - Reference:
+    - Usage: usage.md
+    - Support: support.md
+    - Changelog: changelog.md
+
+navbar:
+  left:
+  # - text: Episb web app
+  #   icon: fa-play
+  #   href: http://episb.org
+  # - text: Documentation
+  #   icon: fa-pencil
+  #   href: reference/index.html
+  - text: GitHub
+    icon: fa-github fa-lg
+    href: https://github.com/databio/AIList
+  right:
+  - text: Databio.org
+    href: http://databio.org
+  - text: Software & Data
+    href: http://databio.org/software/
+
+markdown_extensions:
+  - smarty
+  - sane_lists
+  - fenced_code
+
+plugins:
+  - databio:
+      jupyter_build: "docs_jupyter/build"
+      autodoc_modules: null
+      autodoc_build: "docs_build"
+      usage_template: "docs/usage_template.md"
+      usage_cmds:
+        -"$CODEBASE/AIList/bin/AIList --help"
