@@ -12,7 +12,6 @@ nav:
   - Reference:
     - Usage: usage.md
     - Support: support.md
-    - Changelog: changelog.md
 
 navbar:
   left:
