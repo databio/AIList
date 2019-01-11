@@ -1,0 +1,4 @@
+obj/*
+bin/*
+docs_jupyter/build/*
+*ipynb_checkpoints*
