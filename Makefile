@@ -8,7 +8,7 @@ $(OBJ)/%.o: %.c
 	cc -c $(CFLAGS) $< -o $@ 
 
 cbs_r: $(OBJS)
-	cc -o $(BIN)/AIList $(OBJS)
+	cc -o $(BIN)/ailist $(OBJS)
 
 all: $(OBJS)
 

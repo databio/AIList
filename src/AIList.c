@@ -6,7 +6,12 @@
 #include "AIList.h"
 #include <sys/stat.h>
 #include <sys/types.h>
-
+#define PROGRAM_NAME  "ailist"
+#define MAJOR_VERSION "0"
+#define MINOR_VERSION "1"
+#define REVISION_VERSION "1"
+#define BUILD_VERSION "0"
+#define VERSION MAJOR_VERSION "." MINOR_VERSION "." REVISION_VERSION
 //-----------------------------------------------------------------------------
 int compare_uint32(const void *a, const void *b) {
     uint32_t pa = *(uint32_t*)a;
@@ -341,16 +346,20 @@ struct g_data** openBed(char* bFile, int* nD)
     return gD;  
 } 
 
+
+int ailist_help(int argc, char **argv, int exit_code);
+
 int main(int argc, char **argv)
 {
     int cLen = 20;
     if(argc == 5 && strcmp(argv[3], "-L")==0){
         cLen = atoi(argv[4]);
     }
-    else if(argc !=3){   
-        printf("input error: data file (.bed), query file (.bed), option (-L coverage length) \n");
-        return 0;
+    else if(argc!=3){
+        //fprintf(stderr, "Unknown command\n");
+        return ailist_help(argc, argv, 0);//EX_USAGE);
     }
+
     char *qfName = argv[1];
     char *dfName = argv[2];      
     struct stat st = {0}; 
@@ -381,3 +390,11 @@ int main(int argc, char **argv)
     free(nD24);
     return 0;
 }
+
+int ailist_help(int argc, char **argv, int exit_code)
+{
+    fprintf(stderr,"%s, v%s\n" "usage:   %s data-file query-file [-L coverage-length] \n",
+            PROGRAM_NAME, VERSION, PROGRAM_NAME);
+    return exit_code;
+}
+
