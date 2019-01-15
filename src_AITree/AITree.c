@@ -35,7 +35,7 @@ search(unsigned long start, unsigned long end, struct rb_root *root)
 	return results;
 }
 
-static void print_nodes(unsigned long start, unsigned long end)
+/*static void print_nodes(unsigned long start, unsigned long end)
 {
 	struct interval_tree_node *n = interval_tree_iter_first(&root,
 								start, end);
@@ -46,7 +46,7 @@ static void print_nodes(unsigned long start, unsigned long end)
 		n = interval_tree_iter_next(n, start, end);
 	}
 	printf("\n");
-}
+}*/
 
 struct g_data* openBed(char* bFile, int*nR)
 { 
@@ -93,8 +93,8 @@ int main(int argc, char **argv)
         printf("input: data file, query file \n");
         return 0;		    
     }
-    clock_t start1, end1, end2;
-    start1 = clock();     
+    //clock_t start1, end1, end2;
+    //start1 = clock();     
 	int i, ichr;
 	char *qfile = argv[1];
 	char *dfile = argv[2];
@@ -134,7 +134,7 @@ int main(int argc, char **argv)
         }       
     }  
     fclose(fp);
-    end1 = clock();      
+    //end1 = clock();      
     //print_nodes(0, ULONG_MAX);
     //printf("Tree-building time: %f \n", ((double)(end1-start1))/CLOCKS_PER_SEC);
       
@@ -173,14 +173,15 @@ int main(int argc, char **argv)
         if(ichr>=0){
             start = atol(s2) + gstart[ichr];			
             end   = atol(s3) + gstart[ichr] -1;//last base not included				
-            qhits += search(start, end, &root);
+            qhits += search(start, end, &root);            
         }
-        printf("%s\t%s\t%s\t%i\n", s1, s2, s3, qhits);
+        printf("%s\t%ld\t%ld\t%i\n", s1, atol(s2), atol(s3), qhits);          
+        //printf("%s\t%s\t%s\t%i\n", s1, s2, s3, qhits);
         Total += qhits;
     }
     fclose(fp);
-    end2 = clock();
-    printf("Total: %lld\n", (long long)Total);
+    //end2 = clock();
+    //printf("Total: %lld\n", (long long)Total);
     //printf("Searching time: %f \n", ((double)(end2-end1))/CLOCKS_PER_SEC);      
     return 0;
 }

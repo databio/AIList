@@ -586,7 +586,7 @@ int main(int argc, char **argv) {
         nhits[i] = malloc(1*sizeof(int));
         if(nD[i]>0){
             sh[i] = build_nested_list(im[i], nD[i], p_n[i], p_nlists[i]); 
-            printf("%i:\t%i\t%i\t%i\n", i, nD[i], *p_n[i], *p_nlists[i]);
+            //printf("%i:\t%i\t%i\t%i\n", i, nD[i], *p_n[i], *p_nlists[i]);
             //for(j=0;j<nD[i];j++)
             //    printf("%i:\t%i\t%i\t%i\n", j, im[i][j].start, im[i][j].end, im[i][j].sublist);
             
@@ -598,7 +598,7 @@ int main(int argc, char **argv) {
     }  
     //-------------------------------------------------------------------------
     end1 = clock();      
-    printf("Time for construction: %f \n", ((double)(end1-start1))/CLOCKS_PER_SEC);   
+    //printf("Time for construction: %f \n", ((double)(end1-start1))/CLOCKS_PER_SEC);   
     fp = fopen(qfile, "r");
     if (fp == NULL) {
         printf("File %s not found!\n", qfile);
@@ -639,13 +639,13 @@ int main(int argc, char **argv) {
             }
             free_interval_iterator(it_alloc);
             Total += qhits;
-            printf("%s\t%s\t%s\t%i\n", s1, s2, s3, qhits);            
+            printf("%s\t%ld\t%ld\t%i\n", s1, atol(s2), atol(s3), qhits);            
         }
     }
     fclose(fp);
     end2 = clock();    
 
-    printf("Total: %lld\n", (long long)Total);
+    //printf("Total: %lld\n", (long long)Total);
     for(i=0;i<24;i++){
         free(p_n[i]);
         free(p_nlists[i]);
