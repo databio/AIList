@@ -393,7 +393,7 @@ int main(int argc, char **argv)
 
 int ailist_help(int argc, char **argv, int exit_code)
 {
-    fprintf(stderr,"%s, v%s\n" "usage:   %s data-file query-file [-L coverage-length] \n",
+    fprintf(stderr,"%s, v%s\n" "usage:   %s query-file(.bed) database-file(.bed) [-L coverage-length] \n",
             PROGRAM_NAME, VERSION, PROGRAM_NAME);
     return exit_code;
 }
