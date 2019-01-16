@@ -13,29 +13,8 @@ nav:
     - Usage: usage.md
     - Support: support.md
 
-navbar:
-  left:
-  # - text: Episb web app
-  #   icon: fa-play
-  #   href: http://episb.org
-  # - text: Documentation
-  #   icon: fa-pencil
-  #   href: reference/index.html
-  - text: GitHub
-    icon: fa-github fa-lg
-    href: https://github.com/databio/AIList
-  right:
-  - text: Databio.org
-    href: http://databio.org
-  - text: Software & Data
-    href: http://databio.org/software/
-
-markdown_extensions:
-  - smarty
-  - sane_lists
-  - fenced_code
-
 plugins:
+  - search
   - databio:
       jupyter_build: "docs_jupyter/build"
       autodoc_modules: null
