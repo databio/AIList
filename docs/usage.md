@@ -4,7 +4,8 @@
 Here you can see the command-line usage instructions for the main command and for each subcommand:
 
 
-`/home/nsheff/code//AIList/bin/AIList --help`
+`$CODEBASE/AIList/bin/AIList --help`
 ```
-input error: data file (.bed), query file (.bed), option (-L coverage length) 
+ailist, v0.1.1
+usage:   ailist query-file(.bed) database-file(.bed) [-L coverage-length]
 ```

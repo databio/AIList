@@ -14,7 +14,7 @@ make
 ```
 
 ```.output
-make: Nothing to be done for 'all'.
+gcc -Wall -ggdb -D_FILE_OFFSET_BITS=64 interval_tree.o rbtree.o AITree.o -o AITree 
 
 ```
 
