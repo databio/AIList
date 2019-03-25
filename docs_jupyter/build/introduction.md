@@ -1,7 +1,7 @@
 
 # AIList installation and hello world
 
-In this vignette we will show you how to compile and install `ailist`, and then show you how to run it on a simple example dataset. First, clone the repository and use `make` to compile the binary:
+In this vignette we will show you how to compile and install `ailist`, and then show you how to run it on a simple example dataset. First, clone the repository and use `make` to compile the binary (using bash kernel):
 
 
 ```bash
@@ -12,6 +12,17 @@ make
 ```
 
 ```.output
+Cloning into 'AIList'...
+remote: Enumerating objects: 244, done.        
+remote: Counting objects: 100% (244/244), done.        
+remote: Compressing objects: 100% (178/178), done.        
+remote: Total 244 (delta 102), reused 203 (delta 63), pack-reused 0        
+Receiving objects: 100% (244/244), 949.77 KiB | 0 bytes/s, done.
+Resolving deltas: 100% (102/102), done.
+Checking connectivity... done.
+mkdir -p obj
+mkdir -p bin
+cc -c  src/AIList.c -o obj/AIList.o 
 cc -o bin/ailist obj/AIList.o
 
 ```
@@ -77,7 +88,7 @@ chr1	79	95
 
 ```
 
-If we run `gsail` with these files, we will get the query back with an additional column, counting how many database regions overlap it:
+If we run `ailist` with these files, we will get the query back with an additional column, counting how many database regions overlap it:
 
 
 ```bash
@@ -90,15 +101,5 @@ chr1	32	49	4
 chr1	60	62	1
 chr1	71	90	4
 chr1	79	95	4
-
-```
-
-
-```bash
-
-```
-
-
-```bash
 
 ```
