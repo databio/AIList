@@ -14,6 +14,7 @@
 #include <assert.h>
 //-------------------------------------------------------------------------------------
 #include "khash.h"
+#include "kseq.h"
 #define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
 #define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
 #define MAXC 10							//max number of components
@@ -39,6 +40,9 @@ typedef struct {
 } ailist_t;
 
 //-------------------------------------------------------------------------------------
+//Parse a line of BED file
+char *parse_bed(char *s, int32_t *st_, int32_t *en_);
+
 //Initialize ailist_t
 ailist_t *ailist_init(void);
 
@@ -65,6 +69,8 @@ void ailist_destroy(ailist_t *ail);
 //-------------------------------------------------------------------------------------
 //The following section taken from Dr Heng Li's cgranges
 // (https://github.com/lh3/cgranges)
+
+KSTREAM_INIT(gzFile, gzread, 0x10000)
 /**************
  * Radix sort *
  **************/
