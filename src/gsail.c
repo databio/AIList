@@ -62,7 +62,7 @@ int main(int argc, char **argv)
 		if (ctg == 0) continue;	      
 		nhits = ailist_query(ail, ctg, st1, en1, &mr, &hits);
 		if(pmode==0)
-			printf("%ld:\t%s\t%i\t%i", (long)nhits, ctg, st1, en1);
+			printf("%s:\t %i\t %i\t %ld\n", ctg, st1, en1, (long)nhits);
 		nol += nhits;
 	}	
 	end3 = clock();
