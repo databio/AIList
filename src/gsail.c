@@ -32,7 +32,8 @@ int main(int argc, char **argv)
     //1. Read interval data    	     
     ailist_t *ail =  readBED(argv[1]);
     end1 = clock(); 
-    
+    printf("loading time: %f\n", ((double)(end1-start))/CLOCKS_PER_SEC); 
+        
     //2. Construct ailist 
     ailist_construct(ail, cLen);
     if(pmode==2){
@@ -44,11 +45,12 @@ int main(int argc, char **argv)
 		}
     }
     end2 = clock();  
-    
+    printf("constru time: %f\n", ((double)(end2-end1))/CLOCKS_PER_SEC); 
+        
     //3. Search	
 	int64_t nol = 0;
-	uint32_t nhits=0, mr=0;
-	uint32_t *hits=0;
+	uint32_t nhits=0, mr=1000000;
+	uint32_t *hits=malloc(mr*sizeof(uint32_t));
 	
 	kstream_t *ks;
 	kstring_t str = {0,0,0};
@@ -67,8 +69,6 @@ int main(int argc, char **argv)
 	}	
 	end3 = clock();
     printf("Total %lld\n", (long long)nol); 
-    printf("loading time: %f\n", ((double)(end1-start))/CLOCKS_PER_SEC);       
-    printf("constru time: %f\n", ((double)(end2-end1))/CLOCKS_PER_SEC);       
     printf("query time: %f\n", ((double)(end3-end2))/CLOCKS_PER_SEC);           
   
   	free(str.s);

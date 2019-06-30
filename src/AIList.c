@@ -200,7 +200,7 @@ int32_t get_ctg(const ailist_t *ail, const char *chr)
 
 uint32_t ailist_query(ailist_t *ail, char *chr, uint32_t qs, uint32_t qe, uint32_t *mr, uint32_t **ir)
 {   
-    uint32_t nr = 0, m = *mr, *r = *ir, tmp;
+    uint32_t nr = 0, m = *mr, *r = *ir;
     int32_t gid = get_ctg(ail, chr);
     if(gid>=ail->nctg || gid<0)return 0;
     ctg_t *p = &ail->ctg[gid];	
@@ -211,26 +211,26 @@ uint32_t ailist_query(ailist_t *ail, char *chr, uint32_t qs, uint32_t qe, uint32
         if(p->lenC[k]>15){
             t = bSearch(p->glist, cs, ce, qe); 	//rs<qe: inline not better 
             if(nr+t-cs>=m){
-            	m = nr+t-cs+2048;
+            	m = nr+t-cs + 1024;
             	r = realloc(r, m*sizeof(uint32_t));
             }
             while(t>=cs && p->maxE[t]>qs){
-                if(p->glist[t].end>qs)
+                if(p->glist[t].end>qs)               	
                     r[nr++] = t;
                 t--;
             }
         }
         else{
         	if(nr+ce-cs>=m){
-        		m = nr+ce-cs+2048;
+        		m = nr+ce-cs + 1024;
         		r = realloc(r, m*sizeof(uint32_t));
         	}
             for(t=cs; t<ce; t++)
                 if(p->glist[t].start<qe && p->glist[t].end>qs)
-                    r[nr++] = t;                             
+                    r[nr++] = t;                           
         }
     }    
     *ir = r, *mr = m;                  
-    return nr;                                  
+    return nr;                              
 }
 

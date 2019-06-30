@@ -8,8 +8,8 @@ OBJS = $(addprefix $(OBJ)/, $(LIB))
 $(OBJ)/%.o: %.c
 	cc -c $(CFLAGS) $< -o $@ 
 
-gsail: $(OBJS)
-	cc -o $(BIN)/gsail $(OBJS) $(CFLAGS)
+ailist: $(OBJS)
+	cc -o $(BIN)/ailist $(OBJS) $(CFLAGS)
 
 all: $(OBJS)
 
