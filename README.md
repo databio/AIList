@@ -9,7 +9,7 @@ Since the first release of our [ailist_paper][ailist_paper], a new representativ
 ### Test results
 
 Nine datasets in the following table are used for the test. The first 7 datasets are used in our original paper and the last two are used by LITree. They are all available 
-[here](http://big.databio.org/example_data/AIList/aIListTestData.tgz). A flat interval list (null interval list) can be treated as a simple list, so only a sinlge binary search is needed for a query. Dataset 1 is flat (1 total list with no sublist) and datasets 2 and 7 are near flat (only one sublist).
+[here](http://big.databio.org/example_data/AIList/AIListTestData.tgz). A flat interval list (null interval list) can be treated as a simple list, so only a sinlge binary search is needed for a query. Dataset 1 is flat (1 total list with no sublist) and datasets 2 and 7 are near flat (only one sublist).
 
 |Dataset#  |Name(.bed)        |size(x1000) |non-flatness |
 |:---------|:-----------------|:-----------|:------------|
@@ -21,9 +21,9 @@ Nine datasets in the following table are used for the test. The first 7 datasets
 |5         |chainXenTro3Link  |50,981      |7            |
 |6         |chainMonDom5Link  |128,187     |7            |
 |7         |ex-anno           |1,194       |2            |
-|8         |ex-rna            |9,945       |6            |
+|8         |ex-rna            |9,945       |7            |
 
-The re-implemented AIList has the same size of core data members as LITree and the time for the construction and result output of AIList is almost the same as that of the LITree, so the difference is on the query speed, which is the purpose of this comparision.
+The re-implemented AIList has the same size of core data members as LITree and the time for the construction and result output of AIList is almost the same as that of the LITree, so the difference is on the query speed, which is the purpose of this comparison.
 
 The command for AIList:
 ```
@@ -50,13 +50,13 @@ The first BED file is loaded into RAM and constructed as a 'database', intervals
 
 ### Understanding the underline data structures of AIList and LITree
 
-* As an implementation of ITree, LITree (cgranges) gets the best out of the ITree `data structure`: 1) it gets rid of the pointers to child nodes, so it minimizes the data storage (memory); 2) it is natually balanced, so it gets rid of the separated and costy tree balancing processing; 3) cgranges sorts the whole list (array) before indexing, so it breaks down long coverage (see ailist_paper) and reduces the search space, and it also maintains a unique tree representation (in conventional ITree for the same set of intervals, the final tree structure is dependent on the order of the intervals being added and on the balancing processing). So cgranges is much better than other implementations of the ITree `data structure`. The limitation is on the underline data structure: it only partially reduces the `search space`.
+* As an implementation of ITree, LITree (cgranges) gets the best out of the ITree `data structure`: 1) it gets rid of the pointers to child nodes, so it minimizes the data storage (memory); 2) it is natually balanced, so it gets rid of the separated and costy tree balancing processing; 3) cgranges sorts the whole list (array) before indexing, so it breaks down long coverage (see ailist_paper) when indexing the tree into branches and reduces the search space, and it also maintains a unique tree representation (in conventional ITree for the same set of intervals, the final tree structure is dependent on the order of the intervals being added and on the balancing processing). So cgranges is much better than other implementations of the ITree `data structure`. The limitation is on the underline data structure: it only partially reduces the `search space`.
 
 * The above test results show that ailist is generally faster than LITree, which is expected from their underline data structures. For flat or nearly flat datasets (#1, #2 and #7), they are close; for non-flat datasets (#0, #3, etc), AIList is significantly faster than LITree. For datasets 3 and 6, the actual query time is 105s for AIList and 296s for LITree, which accounts for a `2.8x` difference in query efficiency. As a data structure aimed to minimize the `search space`, i.e., to reduce the search space to the level of a flat list, NCList does it completely but with heavily additional cost (extra storage, extra binary search on sub-lists, see [ailist_paper][ailist_paper]), LITree achieves that partially with ignorable additional cost, and AIList does it nearly completely with ignorable cost. 
 
 ### Use ailist in python
 
-A Python wrapper of the AIList c code is included in folder src_py and it is very fast (~3 times less efficient than AIList c code but faster than most other c codes).
+A Python wrapper of the AIList c code is included in folder src_py and the search is very fast (~3 times less efficient than AIList c code).
 To install after cloning this repo: 
 ```
 cd AIList/src_py
