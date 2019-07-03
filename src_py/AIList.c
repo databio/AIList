@@ -156,7 +156,7 @@ int32_t get_ctg(const ailist_t *ail, const char *chr)
 	return k == kh_end(h)? -1 : kh_val(h, k);
 }
 
-uint32_t ailist_query(ailist_t *ail, char *chr, uint32_t qs, uint32_t qe, uint32_t *mr, uint32_t **ir)
+uint32_t ailist_query(ailist_t *ail, char *chr, uint32_t qs, uint32_t qe, int32_t *gid, uint32_t *mr, uint32_t **ir)
 {   
     uint32_t nr = 0, m = *mr, *r = *ir;
     int32_t id = get_ctg(ail, chr);
@@ -184,7 +184,7 @@ uint32_t ailist_query(ailist_t *ail, char *chr, uint32_t qs, uint32_t qe, uint32
                 }                            
         }
     }    
-    *ir = r, *mr = m;             
+    *gid = id, *ir = r, *mr = m;             
     return nr;                                  
 }
 

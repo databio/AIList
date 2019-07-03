@@ -64,7 +64,7 @@ int32_t get_ctg(const ailist_t *ail, const char *chr);
 uint32_t bSearch(gdata_t* As, uint32_t idxS, uint32_t idxE, uint32_t qe);
 
 //Query ailist intervals
-uint32_t ailist_query(ailist_t *ail, char *chr, uint32_t qs, uint32_t qe,  uint32_t *mr, uint32_t **ir); //int32_t *gid,
+uint32_t ailist_query(ailist_t *ail, char *chr, uint32_t qs, uint32_t qe, int32_t *gid, uint32_t *mr, uint32_t **ir);
 
 //Free ailist data
 void ailist_destroy(ailist_t *ail);
