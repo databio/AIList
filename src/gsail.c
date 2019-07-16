@@ -5,7 +5,7 @@
 //Radix sorting and one-pass loading based on lh3's cgranges: 6/20/2019
 //-----------------------------------------------------------------------------
 #include "AIList.h"
-#define PROGRAM_NAME  "gsail"
+#define PROGRAM_NAME  "ailist"
 #define MAJOR_VERSION "0"
 #define MINOR_VERSION "1"
 #define REVISION_VERSION "1"
@@ -63,7 +63,7 @@ int main(int argc, char **argv)
 		ctg = parse_bed(str.s, &st1, &en1);
 		if (ctg == 0) continue;	      
 		nhits = ailist_query(ail, ctg, st1, en1, &mr, &hits);
-		if(pmode==0)
+		if(pmode==0 && nhits>0)
 			printf("%s:\t %i\t %i\t %ld\n", ctg, st1, en1, (long)nhits);
 		nol += nhits;
 	}	
