@@ -56,7 +56,7 @@ The first BED file is loaded into RAM and constructed as a 'database', intervals
 
 ### Use ailist in python
 
-A Python wrapper of the AIList c code is included in folder src_py and the search is very fast (~3 times less efficient than AIList c code).
+A Python wrapper of the AIList c code is included in folder src_py and the search is very fast (close to AIList c code).
 To install after cloning this repo: 
 ```
 cd AIList/src_py
