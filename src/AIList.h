@@ -54,6 +54,7 @@ void ailist_add(ailist_t *ail, const char *chr, uint32_t s, uint32_t e, int32_t 
 
 //Construct ailist: decomposition and augmentation
 void ailist_construct(ailist_t *ail, int cLen);
+void ailist_construct0(ailist_t *ail, int cLen);
 
 //Get chr index
 int32_t get_ctg(const ailist_t *ail, const char *chr);

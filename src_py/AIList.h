@@ -42,14 +42,11 @@ static inline uint32_t get_start(const ailist_t *ail, int32_t gid, uint32_t i) {
 static inline uint32_t get_end(const ailist_t *ail, int32_t gid, uint32_t i) { return ail->ctg[gid].glist[i].end;}
 static inline int32_t  get_value(const ailist_t *ail, int32_t gid, uint32_t i) { return ail->ctg[gid].glist[i].value;}
 
-//Parse a line of BED file
-char *parse_bed(char *s, int32_t *st_, int32_t *en_);
+//read .BED file
+void readBED(ailist_t *ail, const char* fn);
 
 //Initialize ailist_t
 ailist_t *ailist_init(void);
-
-//read .BED file
-//ailist_t* readBED(const char* fn);
 
 //Add a gdata_t interval
 void ailist_add(ailist_t *ail, const char *chr, uint32_t s, uint32_t e, int32_t v);
@@ -65,6 +62,12 @@ uint32_t bSearch(gdata_t* As, uint32_t idxS, uint32_t idxE, uint32_t qe);
 
 //Query ailist intervals
 uint32_t ailist_query(ailist_t *ail, char *chr, uint32_t qs, uint32_t qe, int32_t *gid, uint32_t *mr, uint32_t **ir);
+
+//Query: only counts
+uint32_t ailist_query_c(ailist_t *ail, char *chr, uint32_t qs, uint32_t qe);
+
+//All counts: caller allocate memory
+int64_t queryBED(ailist_t *ail, const char* fn, int64_t nq, uint32_t *hits);
 
 //Free ailist data
 void ailist_destroy(ailist_t *ail);

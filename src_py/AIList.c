@@ -10,6 +10,23 @@ KRADIX_SORT_INIT(intv, gdata_t, gdata_t_key, 4)
 KHASH_MAP_INIT_STR(str, int32_t)
 typedef khash_t(str) strhash_t;
 
+//-------------------------------------------------------------------------------
+void readBED(ailist_t *ail, const char* fn)
+{   //faster than strtok()
+    char buf[1024];  
+    char *s1, *s2, *s3;
+	int32_t k = 0;    
+    FILE* fd = fopen(fn, "r");
+    while(fgets(buf, 1024, fd)){
+        s1 = strtok(buf, "\t");
+        s2 = strtok(NULL, "\t");
+        s3 = strtok(NULL, "\t");  
+		if (s1) ailist_add(ail, s1, atol(s2), atol(s3), k++);
+	}
+	fclose(fd);
+	return;
+} 
+
 uint32_t bSearch(gdata_t* As, uint32_t idxS, uint32_t idxE, uint32_t qe)
 {   //find tE: index of the first item satisfying .s<qe from right
     int tL=idxS, tR=idxE-1, tM, tE=-1;
@@ -156,6 +173,56 @@ int32_t get_ctg(const ailist_t *ail, const char *chr)
 	return k == kh_end(h)? -1 : kh_val(h, k);
 }
 
+uint32_t ailist_query_c(ailist_t *ail, char *chr, uint32_t qs, uint32_t qe)
+{   
+    uint32_t nr = 0;
+    int32_t id = get_ctg(ail, chr);
+    if(id>=ail->nctg || id<0)return 0;
+    ctg_t *p = &ail->ctg[id];	
+    for(int k=0; k<p->nc; k++){					//search each component
+        int32_t cs = p->idxC[k];
+        int32_t ce = cs + p->lenC[k];			
+        int32_t t;
+        if(p->lenC[k]>15){
+            t = bSearch(p->glist, cs, ce, qe); 	//rs<qe: inline not better 
+            while(t>=cs && p->maxE[t]>qs){
+                if(p->glist[t].end>qs)
+                	nr++;
+                t--;
+            }
+        }
+        else{
+            for(t=cs; t<ce; t++){
+                if(p->glist[t].start<qe && p->glist[t].end>qs)
+                	nr++; 
+			}                           
+        }
+    }               
+    return nr;                                  
+}
+
+//caller allocate
+int64_t queryBED(ailist_t *ail, const char* fn, int64_t nq, uint32_t *hits)
+{	//find the number of overlaps for each query interval
+    char buf[1024];  
+    char *s1, *s2, *s3;
+	int64_t nTotal = 0, i = 0, n;
+    FILE* fq = fopen(fn, "r");
+    while(i<nq && fgets(buf, 1024, fq)){
+        s1 = strtok(buf, "\t");
+        s2 = strtok(NULL, "\t");
+        s3 = strtok(NULL, "\t"); 	
+		if (s1){
+			n = ailist_query_c(ail, s1, atol(s2), atol(s3));
+			nTotal += n;
+			hits[i] = n;
+		}
+		i++;
+	}
+	fclose(fq);	
+	return nTotal;
+}
+
 uint32_t ailist_query(ailist_t *ail, char *chr, uint32_t qs, uint32_t qe, int32_t *gid, uint32_t *mr, uint32_t **ir)
 {   
     uint32_t nr = 0, m = *mr, *r = *ir;
@@ -177,11 +244,12 @@ uint32_t ailist_query(ailist_t *ail, char *chr, uint32_t qs, uint32_t qe, int32_
             }
         }
         else{
-            for(t=cs; t<ce; t++)
+            for(t=cs; t<ce; t++){
                 if(p->glist[t].start<qe && p->glist[t].end>qs){
                 	if(nr==m) EXPAND(r, m);
                     r[nr++] = t; 
-                }                            
+                } 
+			}                           
         }
     }    
     *gid = id, *ir = r, *mr = m;             

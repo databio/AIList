@@ -2,7 +2,7 @@ CFLAGS = -g -O2 -lz
 BIN = bin
 OBJ = obj
 VPATH = src
-LIB = AIList.o gsail.o
+LIB = AIList.o ailist_main.o
 OBJS = $(addprefix $(OBJ)/, $(LIB))
 
 $(OBJ)/%.o: %.c

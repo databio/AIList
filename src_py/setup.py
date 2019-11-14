@@ -3,6 +3,8 @@ try:
 except ImportError:
 	from distutils.core import setup
 	from distutils.extension import Extension
+import os
+import sysconfig
 
 cmdclass = {}
 
@@ -13,12 +15,15 @@ except ImportError: # without Cython
 else: # with Cython
 	module_src = 'ailist.pyx'
 	cmdclass['build_ext'] = build_ext
+	
+extra_compile_args = sysconfig.get_config_var('CFLAGS').split()
+extra_compile_args += ["-lm", "-lz"]
 
 import sys, platform
 
 sys.path.append('python')
 
-include_dirs = ["."]
+include_dirs = [".", "/usr/local/zlib/include", "/home/john/anaconda3/include"]
 
 setup(
 	name = 'ailist',
@@ -32,6 +37,10 @@ setup(
     ext_modules = [Extension('ailist',
 		sources = [module_src, 'AIList.c'],
 		depends = ['AIList.h', 'khash.h', 'kseq.h', 'ailist.pyx'],
+		#libraries = ['libz'],
+		library_dirs = ['usr/local/zlib/lib', '/usr/lib32/','/usr/lib/x86_64-linux-gnu/'],
+		#extra_link_args = ['-L/usr/lib/x86_64-linux-gnu/'],
+		extra_compile_args = extra_compile_args,	 
 		include_dirs = include_dirs)],
 	classifiers = [
 		'Development Status :: Beta',
