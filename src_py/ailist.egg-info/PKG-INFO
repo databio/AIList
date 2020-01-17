@@ -1,0 +1,20 @@
+Metadata-Version: 1.1
+Name: ailist
+Version: 0.1
+Summary: Augmented Interval List for genomic interval overlap
+Home-page: https://github.com/databio/AIList
+Author: Jianglin Feng
+Author-email: jf.xtable@gmail.com
+License: GPL2
+Description: UNKNOWN
+Keywords: interval
+Platform: UNKNOWN
+Classifier: Development Status :: Beta
+Classifier: License :: OSI Approved :: GPL2 License
+Classifier: Operating System :: POSIX
+Classifier: Programming Language :: C
+Classifier: Programming Language :: Cython
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Scientific/Engineering :: Bio-Informatics

@@ -1,0 +1,7 @@
+AIList.c
+ailist.pyx
+setup.py
+ailist.egg-info/PKG-INFO
+ailist.egg-info/SOURCES.txt
+ailist.egg-info/dependency_links.txt
+ailist.egg-info/top_level.txt

@@ -20,7 +20,7 @@ import sys, platform
 
 sys.path.append('python')
 
-include_dirs = ["."] #, "/usr/local/zlib/include", "/home/john/anaconda3/include"]
+include_dirs = ["."]
 
 setup(
 	name = 'ailist',

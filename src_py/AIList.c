@@ -179,7 +179,8 @@ uint32_t ailist_query_c(ailist_t *ail, char *chr, uint32_t qs, uint32_t qe)
     int32_t id = get_ctg(ail, chr);
     if(id>=ail->nctg || id<0)return 0;
     ctg_t *p = &ail->ctg[id];	
-    for(int k=0; k<p->nc; k++){					//search each component
+    int k;
+    for(k=0; k<p->nc; k++){					//search each component
         int32_t cs = p->idxC[k];
         int32_t ce = cs + p->lenC[k];			
         int32_t t;
@@ -228,8 +229,9 @@ uint32_t ailist_query(ailist_t *ail, char *chr, uint32_t qs, uint32_t qe, int32_
     uint32_t nr = 0, m = *mr, *r = *ir;
     int32_t id = get_ctg(ail, chr);
     if(id>=ail->nctg || id<0)return 0;
-    ctg_t *p = &ail->ctg[id];	
-    for(int k=0; k<p->nc; k++){					//search each component
+    ctg_t *p = &ail->ctg[id];
+    int k;	
+    for(k=0; k<p->nc; k++){					//search each component
         int32_t cs = p->idxC[k];
         int32_t ce = cs + p->lenC[k];			
         int32_t t;
