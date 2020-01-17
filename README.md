@@ -33,7 +33,7 @@ For cgranges (LITree):
 ```
 time bedcov-cr dataset1.bed dataset2.bed -c >/dev/null
 ```
-The first BED file is loaded into RAM and constructed as a 'database', intervals in the second file are used as queries against the 'database' as shown here for columns 2 and 3; columns 4 and 5 reverses the order of the two datasets. 
+The first BED file is loaded into RAM and constructed as a 'database', intervals in the second file are used as queries against the 'database' as shown here for columns 2 and 3; columns 4 and 5 reverse the order of the two datasets. 
 
 |Datasets  |AIList     |LITree    |AIList,r  |LITree,r  |
 |:---------|:----------|:---------|:---------|:---------|
