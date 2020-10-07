@@ -1,4 +1,4 @@
-CFLAGS = -g -O2 -lz
+CFLAGS = -g -O3 -lz
 BIN = bin
 OBJ = obj
 VPATH = src
