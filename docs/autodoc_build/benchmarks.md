@@ -1,4 +1,4 @@
-
+jupyter:True
 # AIList benchmarks
 
 Here we will show you how to benchmark the code. We assume you have already finished the introduction and have compiled and put the `ailist` executable in your path.

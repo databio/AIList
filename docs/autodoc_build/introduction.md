@@ -1,4 +1,4 @@
-
+jupyter:True
 # AIList installation and hello world
 
 In this vignette we will show you how to compile and install `ailist`, and then show you how to run it on a simple example dataset. First, clone the repository and use `make` to compile the binary (using bash kernel):

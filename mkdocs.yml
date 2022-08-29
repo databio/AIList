@@ -3,10 +3,11 @@ site_name: AIList
 site_url: http://code.databio.org/AIList/
 repo_url: http://github.com/databio/AIList
 theme: databio
+use_directory_urls: true
 
 nav:
   - Getting started:
-    - Introduction: README.md
+    - Introduction: index.md
     - Installation and Hello World!: introduction.md
     - Benchmarks: benchmarks.md
 
@@ -17,9 +18,8 @@ nav:
 plugins:
   - search
   - databio:
-      jupyter_build: "docs_jupyter/build"
+      jupyter_build: "docs/autodoc_build"
       autodoc_modules: null
-      autodoc_build: "docs_build"
       usage_template: "docs/usage_template.md"
       usage_cmds:
         -"$CODEBASE/AIList/bin/AIList --help"
