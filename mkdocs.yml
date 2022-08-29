@@ -1,7 +1,8 @@
 site_name: AIList
 # site_logo: img/logo_caravel_dark.svg
-site_url: http://code.databio.org/AIList/
+site_url: http://ailist.databio.org/
 repo_url: http://github.com/databio/AIList
+paper_link: https://doi.org/10.1093/bioinformatics/btz407
 theme: databio
 use_directory_urls: true
 

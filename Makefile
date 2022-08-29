@@ -1,14 +1,15 @@
+CFLAGS = -g -O3 -lz
 BIN = bin
 OBJ = obj
 VPATH = src
-LIB = AIList.o
+LIB = AIList.o ailist_main.o
 OBJS = $(addprefix $(OBJ)/, $(LIB))
 
 $(OBJ)/%.o: %.c
 	cc -c $(CFLAGS) $< -o $@ 
 
-cbs_r: $(OBJS)
-	cc -o $(BIN)/ailist $(OBJS)
+ailist: $(OBJS)
+	cc -o $(BIN)/ailist $(OBJS) $(CFLAGS)
 
 all: $(OBJS)
 

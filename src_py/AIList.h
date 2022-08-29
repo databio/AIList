@@ -10,11 +10,9 @@
 #include <time.h>
 #include <ctype.h>
 #include <math.h>
-#include <zlib.h>
 #include <assert.h>
 //-------------------------------------------------------------------------------------
 #include "khash.h"
-#include "kseq.h"
 #define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
 #define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
 #define MAXC 10							//max number of components
@@ -40,21 +38,21 @@ typedef struct {
 } ailist_t;
 
 //-------------------------------------------------------------------------------------
-//Parse a line of BED file
-char *parse_bed(char *s, int32_t *st_, int32_t *en_);
+static inline uint32_t get_start(const ailist_t *ail, int32_t gid, uint32_t i) { return ail->ctg[gid].glist[i].start;}
+static inline uint32_t get_end(const ailist_t *ail, int32_t gid, uint32_t i) { return ail->ctg[gid].glist[i].end;}
+static inline int32_t  get_value(const ailist_t *ail, int32_t gid, uint32_t i) { return ail->ctg[gid].glist[i].value;}
+
+//read .BED file
+void readBED(ailist_t *ail, const char* fn);
 
 //Initialize ailist_t
 ailist_t *ailist_init(void);
-
-//read .BED file
-ailist_t* readBED(const char* fn);
 
 //Add a gdata_t interval
 void ailist_add(ailist_t *ail, const char *chr, uint32_t s, uint32_t e, int32_t v);
 
 //Construct ailist: decomposition and augmentation
 void ailist_construct(ailist_t *ail, int cLen);
-void ailist_construct0(ailist_t *ail, int cLen);
 
 //Get chr index
 int32_t get_ctg(const ailist_t *ail, const char *chr);
@@ -63,7 +61,13 @@ int32_t get_ctg(const ailist_t *ail, const char *chr);
 uint32_t bSearch(gdata_t* As, uint32_t idxS, uint32_t idxE, uint32_t qe);
 
 //Query ailist intervals
-uint32_t ailist_query(ailist_t *ail, char *chr, uint32_t qs, uint32_t qe, uint32_t *mr, uint32_t **ir);
+uint32_t ailist_query(ailist_t *ail, char *chr, uint32_t qs, uint32_t qe, int32_t *gid, uint32_t *mr, uint32_t **ir);
+
+//Query: only counts
+uint32_t ailist_query_c(ailist_t *ail, char *chr, uint32_t qs, uint32_t qe);
+
+//All counts: caller allocate memory
+int64_t queryBED(ailist_t *ail, const char* fn, int64_t nq, uint32_t *hits);
 
 //Free ailist data
 void ailist_destroy(ailist_t *ail);
@@ -71,7 +75,7 @@ void ailist_destroy(ailist_t *ail);
 //The following section taken from Dr Heng Li's cgranges
 // (https://github.com/lh3/cgranges)
 
-KSTREAM_INIT(gzFile, gzread, 0x10000)
+//KSTREAM_INIT(gzFile, gzread, 0x10000)
 /**************
  * Radix sort *
  **************/
@@ -133,11 +137,6 @@ KSTREAM_INIT(gzFile, gzread, 0x10000)
 /*********************
  * Convenient macros *
  *********************/
-
-#ifndef kroundup32
-#define kroundup32(x) (--(x), (x)|=(x)>>1, (x)|=(x)>>2, (x)|=(x)>>4, (x)|=(x)>>8, (x)|=(x)>>16, ++(x))
-#endif
-
 #define CALLOC(type, len) ((type*)calloc((len), sizeof(type)))
 #define REALLOC(ptr, len) ((ptr) = (__typeof__(ptr))realloc((ptr), (len) * sizeof(*(ptr))))
 
