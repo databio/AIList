@@ -35,7 +35,7 @@ uint32_t bSearch(gdata_t* As, uint32_t idxS, uint32_t idxE, uint32_t qe)
     else if(As[tL].start >= qe)
         return -1;
     while(tL<tR-1){
-        tM = (tL+tR)/2; 
+        tM = tL + (tR - tL)/2; 
         if(As[tM].start >= qe)
             tR = tM-1;
         else
