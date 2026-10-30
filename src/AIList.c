@@ -100,6 +100,7 @@ void ailist_add(ailist_t *ail, const char *chr, uint32_t s, uint32_t e, int32_t 
 	gdata_t *p = &q->glist[q->nr++];
 	p->start = s;
 	p->end   = e;
+	p->value = v;
 	return;
 }
 
